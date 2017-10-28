@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33222078-540E-4BEB-AF8C-5A13B76230DF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GerenciadorJogos.DataAccess</RootNamespace>
+    <AssemblyName>GerenciadorJogos.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\GerenciadorJogosContext.cs" />
+    <Compile Include="Map\AmigoMap.cs" />
+    <Compile Include="Map\EmprestimoMap.cs" />
+    <Compile Include="Map\JogoMap.cs" />
+    <Compile Include="Map\UsuarioMap.cs" />
+    <Compile Include="Migrations\201710272335327_Atualizacao1.cs" />
+    <Compile Include="Migrations\201710272335327_Atualizacao1.Designer.cs">
+      <DependentUpon>201710272335327_Atualizacao1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710272342126_Atualizacao11.cs" />
+    <Compile Include="Migrations\201710272342126_Atualizacao11.Designer.cs">
+      <DependentUpon>201710272342126_Atualizacao11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710280125148_Atualizacao.cs" />
+    <Compile Include="Migrations\201710280125148_Atualizacao.Designer.cs">
+      <DependentUpon>201710280125148_Atualizacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710280133506_Atualizacao2.cs" />
+    <Compile Include="Migrations\201710280133506_Atualizacao2.Designer.cs">
+      <DependentUpon>201710280133506_Atualizacao2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GerenciadorJogos.Domain\GerenciadorJogos.Domain.csproj">
+      <Project>{E29D3AC1-F290-4CA6-91B2-C8D53BCB5A75}</Project>
+      <Name>GerenciadorJogos.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GerenciadorJogos.Util\GerenciadorJogos.Util.csproj">
+      <Project>{F6E28697-C460-40D3-B508-CDDCC2DE31F8}</Project>
+      <Name>GerenciadorJogos.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710272335327_Atualizacao1.resx">
+      <DependentUpon>201710272335327_Atualizacao1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710272342126_Atualizacao11.resx">
+      <DependentUpon>201710272342126_Atualizacao11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710280125148_Atualizacao.resx">
+      <DependentUpon>201710280125148_Atualizacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710280133506_Atualizacao2.resx">
+      <DependentUpon>201710280133506_Atualizacao2.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
