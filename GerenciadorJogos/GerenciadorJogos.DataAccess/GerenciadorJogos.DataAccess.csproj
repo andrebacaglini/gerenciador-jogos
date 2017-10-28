@@ -52,25 +52,9 @@
     <Compile Include="Map\EmprestimoMap.cs" />
     <Compile Include="Map\JogoMap.cs" />
     <Compile Include="Map\UsuarioMap.cs" />
-    <Compile Include="Migrations\201710272335327_Atualizacao1.cs" />
-    <Compile Include="Migrations\201710272335327_Atualizacao1.Designer.cs">
-      <DependentUpon>201710272335327_Atualizacao1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710272342126_Atualizacao11.cs" />
-    <Compile Include="Migrations\201710272342126_Atualizacao11.Designer.cs">
-      <DependentUpon>201710272342126_Atualizacao11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710280125148_Atualizacao.cs" />
-    <Compile Include="Migrations\201710280125148_Atualizacao.Designer.cs">
-      <DependentUpon>201710280125148_Atualizacao.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710280133506_Atualizacao2.cs" />
-    <Compile Include="Migrations\201710280133506_Atualizacao2.Designer.cs">
-      <DependentUpon>201710280133506_Atualizacao2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710281805289_Atualizacao3.cs" />
-    <Compile Include="Migrations\201710281805289_Atualizacao3.Designer.cs">
-      <DependentUpon>201710281805289_Atualizacao3.cs</DependentUpon>
+    <Compile Include="Migrations\201710282214327_GerenciadorJogos_1.cs" />
+    <Compile Include="Migrations\201710282214327_GerenciadorJogos_1.Designer.cs">
+      <DependentUpon>201710282214327_GerenciadorJogos_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,20 +74,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710272335327_Atualizacao1.resx">
-      <DependentUpon>201710272335327_Atualizacao1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710272342126_Atualizacao11.resx">
-      <DependentUpon>201710272342126_Atualizacao11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710280125148_Atualizacao.resx">
-      <DependentUpon>201710280125148_Atualizacao.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710280133506_Atualizacao2.resx">
-      <DependentUpon>201710280133506_Atualizacao2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710281805289_Atualizacao3.resx">
-      <DependentUpon>201710281805289_Atualizacao3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710282214327_GerenciadorJogos_1.resx">
+      <DependentUpon>201710282214327_GerenciadorJogos_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,19 +1,20 @@
 namespace GerenciadorJogos.DataAccess.Migrations
 {
-    using GerenciadorJogos.Domain.Entities;
-    using GerenciadorJogos.Util.Enums;
-    using GerenciadorJogos.Util.Helpers;
+    using global::GerenciadorJogos.DataAccess.Context;
+    using global::GerenciadorJogos.Domain.Entities;
+    using global::GerenciadorJogos.Util.Enums;
+    using global::GerenciadorJogos.Util.Helpers;
     using System;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GerenciadorJogos.DataAccess.Context.GerenciadorJogosContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<GerenciadorJogosContext>
     {
         public Configuration()
-        {
+        { 
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(GerenciadorJogos.DataAccess.Context.GerenciadorJogosContext context)
+        protected override void Seed(GerenciadorJogosContext context)
         {
             //  This method will be called after migrating to the latest version.
 

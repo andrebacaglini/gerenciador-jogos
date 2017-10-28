@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Utilize este formulário para editar os dados do nosso amigo @Model.Nome!</h4>
+        <h4>Utilize este formulário para editar os dados do nosso amigo @Model.Nome.</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.AmigoId)

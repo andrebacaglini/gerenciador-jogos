@@ -7,13 +7,13 @@ namespace GerenciadorJogos.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Atualizacao11 : IMigrationMetadata
+    public sealed partial class GerenciadorJogos_1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Atualizacao11));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(GerenciadorJogos_1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710272342126_Atualizacao11"; }
+            get { return "201710282214327_GerenciadorJogos_1"; }
         }
         
         string IMigrationMetadata.Source

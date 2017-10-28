@@ -1,4 +1,8 @@
-﻿using GerenciadorJogos.WebApp.Models;
+﻿using AutoMapper;
+using GerenciadorJogos.Business.Interfaces;
+using GerenciadorJogos.Domain.Entities;
+using GerenciadorJogos.WebApp.Models;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 
@@ -7,13 +11,21 @@ namespace GerenciadorJogos.WebApp.Controllers
     [Authorize]
     public class JogosController : Controller
     {
-        //private GerenciadorJogosContext db = new GerenciadorJogosContext();
+        #region Propriedades (Autowired)
+
+        public IMapper Mapper { get; set; }
+        public IJogoBusiness JogoBusiness { get; set; }
+
+        #endregion
+
+        #region Metodos GET
 
         // GET: Jogos
         public ActionResult Index()
         {
-            //return View(db.Jogos.ToList());
-            return View();
+            var listaJogos = JogoBusiness.Listar();
+            var listaJogosVm = Mapper.Map<List<JogoViewModel>>(listaJogos);
+            return View(listaJogosVm);
         }
 
         // GET: Jogos/Details/5
@@ -23,36 +35,20 @@ namespace GerenciadorJogos.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Jogo jogo = db.Jogos.Find(id);
-            JogoViewModel jogo = new JogoViewModel();
+            var jogo = JogoBusiness.ConsultarPorId(id.Value);
+
             if (jogo == null)
             {
                 return HttpNotFound();
             }
-            return View(jogo);
+            var jogoVm = Mapper.Map<JogoViewModel>(jogo);
+            return View(jogoVm);
         }
 
         // GET: Jogos/Create
         public ActionResult Create()
         {
             return View();
-        }
-
-        // POST: Jogos/Create
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JogoId,Nome,Plataforma")] JogoViewModel jogo)
-        {
-            if (ModelState.IsValid)
-            {
-                //db.Jogos.Add(jogo);
-                //db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(jogo);
         }
 
         // GET: Jogos/Edit/5
@@ -62,29 +58,13 @@ namespace GerenciadorJogos.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Jogo jogo = db.Jogos.Find(id);
-            JogoViewModel jogo = new JogoViewModel();
+            var jogo = JogoBusiness.ConsultarPorId(id.Value);
             if (jogo == null)
             {
                 return HttpNotFound();
             }
-            return View(jogo);
-        }
-
-        // POST: Jogos/Edit/5
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JogoId,Nome,Plataforma")] JogoViewModel jogo)
-        {
-            if (ModelState.IsValid)
-            {
-                //db.Entry(jogo).State = EntityState.Modified;
-                //db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(jogo);
+            var jogoVm = Mapper.Map<JogoViewModel>(jogo);
+            return View(jogoVm);
         }
 
         // GET: Jogos/Delete/5
@@ -94,33 +74,61 @@ namespace GerenciadorJogos.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Jogo jogo = db.Jogos.Find(id);
-            JogoViewModel jogo = new JogoViewModel();
+            var jogo = JogoBusiness.ConsultarPorId(id.Value);
             if (jogo == null)
             {
                 return HttpNotFound();
             }
-            return View(jogo);
+            var jogoVm = Mapper.Map<JogoViewModel>(jogo);
+            return View(jogoVm);
+        }
+
+        #endregion
+
+        #region Metodos POST
+
+        // POST: Jogos/Create
+        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
+        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "JogoId,Nome,Plataforma")] JogoViewModel jogoVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var jogo = Mapper.Map<Jogo>(jogoVm);
+                JogoBusiness.Salvar(jogo);
+                
+                return RedirectToAction("Index");
+            }
+            return View(jogoVm);
+        }
+
+        // POST: Jogos/Edit/5
+        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
+        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "JogoId,Nome,Plataforma")] JogoViewModel jogoVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var jogo = Mapper.Map<Jogo>(jogoVm);
+                JogoBusiness.Salvar(jogo);
+                return RedirectToAction("Index");
+            }
+            return View(jogoVm);
         }
 
         // POST: Jogos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {
-            //Jogo jogo = db.Jogos.Find(id);
-            //db.Jogos.Remove(jogo);
-            //db.SaveChanges();
+        {            
+            JogoBusiness.ExcluirPorId(id);
             return RedirectToAction("Index");
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        #endregion
     }
 }

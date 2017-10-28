@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="AmigoBusiness.cs" />
     <Compile Include="Interfaces\IAmigoBusiness.cs" />
+    <Compile Include="Interfaces\IJogoBusiness.cs" />
     <Compile Include="Interfaces\IUsuarioBusiness.cs" />
+    <Compile Include="JogoBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsuarioBusiness.cs" />
   </ItemGroup>

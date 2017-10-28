@@ -8,6 +8,7 @@ namespace GerenciadorJogos.WebApp.Models
     {
         public int AmigoId { get; set; }
 
+        [Display(Name = "Nome do Amigo")]
         [Required(ErrorMessage = MensagensInterface.CAMPO_OBRIGATORIO)]
         [MaxLength(100, ErrorMessage = MensagensInterface.TAMANHO_INVALIDO)]
         public string Nome { get; set; }
@@ -16,6 +17,7 @@ namespace GerenciadorJogos.WebApp.Models
         [MaxLength(100, ErrorMessage = MensagensInterface.TAMANHO_INVALIDO)]
         public string Sobrenome { get; set; }
 
+        [Display(Name = "Apelido carinhoso")]
         [MaxLength(50, ErrorMessage = MensagensInterface.TAMANHO_INVALIDO)]
         public string Apelido { get; set; }
 

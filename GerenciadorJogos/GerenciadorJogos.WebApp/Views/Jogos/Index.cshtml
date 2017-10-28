@@ -1,16 +1,16 @@
-﻿@model IEnumerable<GerenciadorJogos.Domain.Entities.Jogo>
+﻿@model IEnumerable<GerenciadorJogos.WebApp.Models.JogoViewModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Jogos Cadastrados</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Novo", "Create")
 </p>
-<table class="table">
+<table class="table table-striped table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nome)
@@ -31,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.Plataforma)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.JogoId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.JogoId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.JogoId })
+                @Html.ActionLink("Editar", "Edit", new { id = item.JogoId }) |
+                @Html.ActionLink("Detalhar", "Details", new { id = item.JogoId }) |
+                @Html.ActionLink("Apagar", "Delete", new { id = item.JogoId })
             </td>
         </tr>
     }
