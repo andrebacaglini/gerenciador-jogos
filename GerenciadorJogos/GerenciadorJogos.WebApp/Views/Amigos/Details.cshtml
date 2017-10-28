@@ -1,18 +1,18 @@
-﻿@model GerenciadorJogos.Domain.Entities.Amigo
+﻿@model GerenciadorJogos.WebApp.Models.AmigoViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalhes de Amigo</h2>
 
 <div>
-    <h4>Amigo</h4>
+    <h4>Abaixo estão listados os detalhes do nosso amigo @Model.Nome.</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+            @Html.DisplayNameFor(model => model.Nome):
         </dt>
 
         <dd>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Sobrenome)
+            @Html.DisplayNameFor(model => model.Sobrenome):
         </dt>
 
         <dd>
@@ -28,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Apelido)
+            @Html.DisplayNameFor(model => model.Apelido):
         </dt>
 
         <dd>
@@ -36,8 +36,43 @@
         </dd>
 
     </dl>
+
+</div>
+<div class="clearfix"></div>
+<h4>Jogos emprestados:</h4>
+<div class="col-md-12">
+    @if (Model.ListaEmprestimos.Any()) { 
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Plataforma</th>
+                <th scope="col">Data de empréstimo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emprestimo in Model.ListaEmprestimos)
+            {
+                <tr>
+                    <td>@emprestimo.Jogo.Nome</td>
+                    <td>@emprestimo.Jogo.Plataforma</td>
+                    <td>@emprestimo.DataEmprestimo.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else
+    {
+        <h5>Este amigo não possui jogos emprestados.</h5>
+    }
+</div>
+<div class="clearfix">
+
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AmigoId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.AmigoId }) |
+    @Html.ActionLink("Votlar", "Index")
 </p>
+
+

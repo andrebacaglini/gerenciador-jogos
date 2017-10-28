@@ -1,4 +1,5 @@
 ﻿using GerenciadorJogos.Util.Enums;
+using System.Collections.Generic;
 
 namespace GerenciadorJogos.Domain.Entities
 {

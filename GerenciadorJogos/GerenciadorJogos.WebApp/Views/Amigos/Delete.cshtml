@@ -1,16 +1,21 @@
-﻿@model GerenciadorJogos.Domain.Entities.Amigo
+﻿@model GerenciadorJogos.WebApp.Models.AmigoViewModel
 
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Apagar Amigo</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Você tem certeza que deseja apagar nosso amigo @Model.Nome?</h3>
 <div>
-    <h4>Amigo</h4>
     <hr />
+    @if (Model.ListaEmprestimos.Any())
+    {
+        <div class="alert alert-danger">
+            <b>Ops!</b> Parece que nosso amigo ainda possui alguns <a id="listarJogosEmprestados" class="alert-link" href="#">jogos emprestados.</a>
+        </div>
+    }
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Nome)
@@ -38,12 +43,36 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @if (Model.ListaEmprestimos.Any())
+            {
+                <input type="submit" value="Apagar" class="btn btn-default" disabled="disabled" />
+            }
+            else
+            {
+                <input type="submit" value="Apagar" class="btn btn-default" />
+            }|
+            @Html.ActionLink("Voltar", "Index")
         </div>
     }
 </div>
+<div id="containerModal"></div>
+@section scripts{
+    <script type="text/javascript">
+        var app = app || {};
+        app.Urls = app.Urls || {};
+        app.Urls.urlBase = '@Url.Content("~")';
+        app.Urls.urlListarJogosAmigo = '@Url.Action("ListarJogosAmigo","Amigos")';
+
+        var modelAmigo = {
+            AmigoId: '@Model.AmigoId'
+        };
+
+    </script>
+    <script type="text/javascript" src="@Scripts.Url("~/Scripts/gerenciadorJogos.js")"></script>
+    <script type="text/javascript" src="@Scripts.Url("~/Scripts/Amigo/amigo.js")"></script>
+}

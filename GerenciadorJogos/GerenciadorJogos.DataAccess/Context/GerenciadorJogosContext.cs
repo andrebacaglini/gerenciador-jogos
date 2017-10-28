@@ -12,12 +12,7 @@ namespace GerenciadorJogos.DataAccess.Context
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
-        }
-
-        public static GerenciadorJogosContext Create()
-        {
-            return new GerenciadorJogosContext();
-        }
+        }       
 
         public DbSet<Amigo> Amigos { get; set; }
         public DbSet<Jogo> Jogos { get; set; }

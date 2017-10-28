@@ -2,7 +2,7 @@
 using System.Net;
 using System.Web.Mvc;
 
-namespace GerenciadorJogos.MvcWebApp.Controllers
+namespace GerenciadorJogos.WebApp.Controllers
 {
     [Authorize]
     public class EmprestimosController : Controller

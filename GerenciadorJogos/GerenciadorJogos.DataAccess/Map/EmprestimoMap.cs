@@ -10,9 +10,11 @@ namespace GerenciadorJogos.DataAccess.Map
             ToTable("tb_emprestimo");
 
             HasKey(x => x.EmprestimoId);
-
-            HasRequired(x => x.Amigo);
+            
             HasRequired(x => x.Jogo);
+            HasRequired(x => x.Amigo)
+                .WithMany(x => x.ListaEmprestimos)
+                .HasForeignKey(x => x.AmigoId);
 
             Property(x => x.DataEmprestimo).IsRequired();
             Property(x => x.DataDevolucao).IsOptional();

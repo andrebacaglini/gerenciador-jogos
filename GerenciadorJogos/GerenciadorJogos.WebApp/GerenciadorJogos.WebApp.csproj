@@ -46,6 +46,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -59,6 +68,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -145,6 +157,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoFacConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -156,6 +170,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MapperProfiles\AmigoMapperProfile.cs" />
+    <Compile Include="MapperProfiles\EmprestimoMapperProfile.cs" />
+    <Compile Include="MapperProfiles\JogoMapperProfile.cs" />
+    <Compile Include="MapperProfiles\UsuarioMapperProfile.cs" />
     <Compile Include="Models\AmigoViewModel.cs" />
     <Compile Include="Models\EmprestimoViewModel.cs" />
     <Compile Include="Models\JogoViewModel.cs" />
@@ -169,12 +187,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Amigo\amigo.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\gerenciadorJogos.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -215,6 +235,7 @@
     <Content Include="Views\Jogos\Edit.cshtml" />
     <Content Include="Views\Jogos\Index.cshtml" />
     <Content Include="Views\Conta\Login.cshtml" />
+    <Content Include="Views\Amigos\Partial\_modalListaJogosAmigo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -233,6 +254,18 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GerenciadorJogos.Bootstrapper\GerenciadorJogos.Bootstrapper.csproj">
+      <Project>{1df29dca-7a74-415e-8d48-146501d15f23}</Project>
+      <Name>GerenciadorJogos.Bootstrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GerenciadorJogos.Business\GerenciadorJogos.Business.csproj">
+      <Project>{1BD62B7D-D679-4C64-940B-0A32B3042544}</Project>
+      <Name>GerenciadorJogos.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GerenciadorJogos.Domain\GerenciadorJogos.Domain.csproj">
+      <Project>{e29d3ac1-f290-4ca6-91b2-c8d53bcb5a75}</Project>
+      <Name>GerenciadorJogos.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GerenciadorJogos.Util\GerenciadorJogos.Util.csproj">
       <Project>{F6E28697-C460-40D3-B508-CDDCC2DE31F8}</Project>
       <Name>GerenciadorJogos.Util</Name>

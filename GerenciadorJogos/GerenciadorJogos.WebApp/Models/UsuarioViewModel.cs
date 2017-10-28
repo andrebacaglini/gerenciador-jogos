@@ -1,25 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GerenciadorJogos.Domain.Entities;
+using GerenciadorJogos.Util.Constantes;
+using GerenciadorJogos.Util.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace GerenciadorJogos.WebApp.Models
 {
     public class UsuarioViewModel
     {
-        [Required(ErrorMessage ="Campo obrigatório.")]
-        [MaxLength(50,ErrorMessage ="Tamanho inválido.")]
+        [Required(ErrorMessage = MensagensInterface.CAMPO_OBRIGATORIO)]
+        [MaxLength(50, ErrorMessage = MensagensInterface.TAMANHO_INVALIDO)]
         public string NomeUsuario { get; set; }
 
         private string _senha;
 
-        [Required(ErrorMessage ="Campo obrigatório.")]
+        [Required(ErrorMessage = MensagensInterface.CAMPO_OBRIGATORIO)]
         public virtual string Senha
         {
             get { return _senha; }
 
             set
             {
-                _senha = System.Text.Encoding.ASCII.GetString(
-                    new System.Security.Cryptography.SHA256Managed().ComputeHash(
-                        System.Text.Encoding.ASCII.GetBytes(value)));
+                _senha = CriptografiaHelper.Criptografar(value);
 
             }
         }

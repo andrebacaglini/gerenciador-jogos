@@ -1,4 +1,7 @@
-﻿using GerenciadorJogos.WebApp.Models;
+﻿using AutoMapper;
+using GerenciadorJogos.Business.Interfaces;
+using GerenciadorJogos.Domain.Entities;
+using GerenciadorJogos.WebApp.Models;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +11,8 @@ namespace GerenciadorJogos.WebApp.Controllers
 {
     public class ContaController : Controller
     {
-        //private GerenciadorJogosContext db = new GerenciadorJogosContext();
+        public IUsuarioBusiness UsuarioBusiness { get; set; }
+        public IMapper Mapper { get; set; }
 
         [HttpGet]
         public ActionResult Login()
@@ -28,17 +32,16 @@ namespace GerenciadorJogos.WebApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Login data is incorrect!");
+                    ModelState.AddModelError("", "Credenciais inválidas.");
                 }
             }
             return View(usuario);
         }
 
-        
         private bool UsuarioEstaValido(UsuarioViewModel usuario)
         {
-            return true;
-            //return db.Usuarios.Any(x => x.NomeUsuario == usuario.NomeUsuario && x.Senha == senha);
+            var objUsuario = Mapper.Map<Usuario>(usuario);
+            return UsuarioBusiness.ValidarUsuario(objUsuario);
         }
 
         public ActionResult Logout()

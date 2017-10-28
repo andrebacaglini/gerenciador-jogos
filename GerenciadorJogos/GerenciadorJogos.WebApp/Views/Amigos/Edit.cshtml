@@ -1,19 +1,19 @@
-﻿@model GerenciadorJogos.Domain.Entities.Amigo
+﻿@model GerenciadorJogos.WebApp.Models.AmigoViewModel
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edição de Amigo</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Amigo</h4>
+        <h4>Utilize este formulário para editar os dados do nosso amigo @Model.Nome!</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.AmigoId)
@@ -21,7 +21,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @placeholder = "Primeiro nome", @maxlength = 100 } })
+                @Html.HiddenFor(model => model.Nome)
                 @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +30,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Sobrenome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Sobrenome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Sobrenome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Último nome", @maxlength = 100 } })
                 @Html.ValidationMessageFor(model => model.Sobrenome, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,21 +38,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Apelido, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Apelido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Apelido, new { htmlAttributes = new { @class = "form-control", @placeholder = "Um apelido carinhoso", @maxlength = 50 } })
                 @Html.ValidationMessageFor(model => model.Apelido, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar", "Index")
 </div>
 
 @section Scripts {

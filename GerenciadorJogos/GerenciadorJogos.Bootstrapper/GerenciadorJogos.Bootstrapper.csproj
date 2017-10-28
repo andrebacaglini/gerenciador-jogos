@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F6E28697-C460-40D3-B508-CDDCC2DE31F8}</ProjectGuid>
+    <ProjectGuid>{1DF29DCA-7A74-415E-8D48-146501D15F23}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GerenciadorJogos.Util</RootNamespace>
-    <AssemblyName>GerenciadorJogos.Util</AssemblyName>
+    <RootNamespace>GerenciadorJogos.Bootstrapper</RootNamespace>
+    <AssemblyName>GerenciadorJogos.Bootstrapper</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,10 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constantes\MensagensInterface.cs" />
-    <Compile Include="Enums\EnumPlataforma.cs" />
-    <Compile Include="Helpers\CriptografiaHelper.cs" />
+    <Compile Include="BootstrapContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GerenciadorJogos.Business\GerenciadorJogos.Business.csproj">
+      <Project>{1bd62b7d-d679-4c64-940b-0a32b3042544}</Project>
+      <Name>GerenciadorJogos.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GerenciadorJogos.DataAccess\GerenciadorJogos.DataAccess.csproj">
+      <Project>{33222078-540e-4beb-af8c-5a13b76230df}</Project>
+      <Name>GerenciadorJogos.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
