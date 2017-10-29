@@ -56,6 +56,10 @@
     <Compile Include="Migrations\201710282214327_GerenciadorJogos_1.Designer.cs">
       <DependentUpon>201710282214327_GerenciadorJogos_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710282221132_GerenciadorJogos_2.cs" />
+    <Compile Include="Migrations\201710282221132_GerenciadorJogos_2.Designer.cs">
+      <DependentUpon>201710282221132_GerenciadorJogos_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +80,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710282214327_GerenciadorJogos_1.resx">
       <DependentUpon>201710282214327_GerenciadorJogos_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710282221132_GerenciadorJogos_2.resx">
+      <DependentUpon>201710282221132_GerenciadorJogos_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

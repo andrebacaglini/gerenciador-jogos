@@ -13,6 +13,6 @@ namespace GerenciadorJogos.Domain.Entities
         public Jogo Jogo { get; set; }
 
         public DateTime DataEmprestimo { get; set; }
-        public DateTime DataDevolucao { get; set; }
+        public DateTime? DataDevolucao { get; set; }
     }
 }

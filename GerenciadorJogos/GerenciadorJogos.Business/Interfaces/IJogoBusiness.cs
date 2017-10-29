@@ -9,5 +9,6 @@ namespace GerenciadorJogos.Business.Interfaces
         Jogo ConsultarPorId(int id);
         void Salvar(Jogo jogo);
         void ExcluirPorId(int id);
+        List<Jogo> ConsultarJogosAindaNaoEmprestados();
     }
 }

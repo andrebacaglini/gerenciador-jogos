@@ -12,11 +12,14 @@ namespace GerenciadorJogos.WebApp.Controllers
     public class AmigosController : Controller
     {
         #region Propriedades (Autowired)
+
         public IAmigoBusiness AmigoBusiness { get; set; }
         public IMapper Mapper { get; set; }
+
         #endregion
 
         #region Metodos GET
+
         // GET: Amigos
         public ActionResult Index()
         {

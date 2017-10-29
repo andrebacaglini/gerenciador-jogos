@@ -8,7 +8,7 @@ namespace GerenciadorJogos.WebApp.MapperProfiles
     {
         public EmprestimoMapperProfile()
         {
-            CreateMap<EmprestimoViewModel, Emprestimo>();
+            CreateMap<EmprestimoViewModel, Emprestimo>();                
             CreateMap<Emprestimo, EmprestimoViewModel>();
         }
     }

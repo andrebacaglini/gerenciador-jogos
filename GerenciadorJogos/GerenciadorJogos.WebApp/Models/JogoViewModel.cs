@@ -19,5 +19,10 @@ namespace GerenciadorJogos.WebApp.Models
 
         [Required(ErrorMessage = MensagensInterface.CAMPO_OBRIGATORIO)]
         public EnumPlataforma Plataforma { get; set; }
+
+        public ICollection<EmprestimoViewModel> ListaEmprestimos { get; set; }
+
+        public List<JogoViewModel> ListaJogosDisponiveis { get; set; }
+
     }
 }

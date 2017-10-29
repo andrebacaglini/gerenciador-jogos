@@ -1,8 +1,8 @@
 ﻿$(function () {
-    documentacao.acoes.click();
+    amigo.acoes.click();
 });
 
-var documentacao = {
+var amigo = {
     acoes: {
         click: function () {
             this.detalharListaJogosAmigo();            

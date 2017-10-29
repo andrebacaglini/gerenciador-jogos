@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmigoBusiness.cs" />
+    <Compile Include="EmprestimoBusiness.cs" />
     <Compile Include="Interfaces\IAmigoBusiness.cs" />
+    <Compile Include="Interfaces\IEmprestimoBusiness.cs" />
     <Compile Include="Interfaces\IJogoBusiness.cs" />
     <Compile Include="Interfaces\IUsuarioBusiness.cs" />
     <Compile Include="JogoBusiness.cs" />

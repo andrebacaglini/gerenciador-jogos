@@ -1,14 +1,14 @@
-﻿@model IEnumerable<GerenciadorJogos.Domain.Entities.Emprestimo>
+﻿@model IEnumerable<GerenciadorJogos.WebApp.Models.EmprestimoViewModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Empréstimos existentes</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Novo", "Create")
 </p>
 <table class="table">
     <tr>
@@ -27,26 +27,32 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amigo.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Jogo.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataEmprestimo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataDevolucao)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmprestimoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmprestimoId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmprestimoId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amigo.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jogo.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEmprestimo)
+            </td>
+            @if (item.DataDevolucao.HasValue)
+            {
+                <td>@item.DataDevolucao.Value</td>
+            }
+            else
+            {
+                <td>Sabe Deus quando...</td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EmprestimoId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EmprestimoId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EmprestimoId })
+            </td>
+        </tr>
+    }
 
 </table>

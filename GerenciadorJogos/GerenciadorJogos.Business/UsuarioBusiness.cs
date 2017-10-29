@@ -1,11 +1,7 @@
 ﻿using GerenciadorJogos.Business.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GerenciadorJogos.Domain.Entities;
 using GerenciadorJogos.DataAccess.Context;
+using GerenciadorJogos.Domain.Entities;
+using System.Linq;
 
 namespace GerenciadorJogos.Business
 {

@@ -195,6 +195,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\gerenciadorJogos.js" />
+    <Content Include="Scripts\Jogo\jogo.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -236,6 +237,7 @@
     <Content Include="Views\Jogos\Index.cshtml" />
     <Content Include="Views\Conta\Login.cshtml" />
     <Content Include="Views\Amigos\Partial\_modalListaJogosAmigo.cshtml" />
+    <Content Include="Views\Jogos\Partial\_modalDetalheAmigo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

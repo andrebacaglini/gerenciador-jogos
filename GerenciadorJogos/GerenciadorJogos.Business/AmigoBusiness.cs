@@ -14,10 +14,13 @@ namespace GerenciadorJogos.Business
 
         public Amigo ConsultarPorId(int? id)
         {
-            var query = _dbContext.Amigos
-                .Include(x => x.ListaEmprestimos.Select(y => y.Jogo));
+            var amigo = _dbContext.Amigos
+                .Include(x => x.ListaEmprestimos.Select(y => y.Jogo))
+                .FirstOrDefault(x => x.AmigoId == id.Value);
 
-            return query.FirstOrDefault(x => x.AmigoId == id.Value);
+            amigo.ListaEmprestimos.ForEach(x => { x.Amigo = null; x.Jogo.ListaEmprestimos = null; });
+
+            return amigo;
         }
 
         public void ExcluirPorId(int id)
@@ -29,7 +32,8 @@ namespace GerenciadorJogos.Business
 
         public List<Amigo> ListarAmigos()
         {
-            return _dbContext.Amigos.ToList(); 
+            var lista = _dbContext.Amigos.ToList();
+            return lista;
         }
 
         public void Salvar(Amigo amigo)
@@ -37,6 +41,5 @@ namespace GerenciadorJogos.Business
             _dbContext.Amigos.AddOrUpdate(amigo);
             _dbContext.SaveChanges();
         }
-
     }
 }

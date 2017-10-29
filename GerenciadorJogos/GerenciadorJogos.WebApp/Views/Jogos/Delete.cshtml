@@ -5,23 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Jogo</h4>
+<h2>Apagar Jogo</h2>
+<hr />
+<h4>Tem certeza que deseja apagar o jogo @Model.Nome?</h4>
+<div>    
     <hr />
+    @if (Model.ListaEmprestimos.Any())
+    {
+        <div class="alert alert-danger">
+            <b>Ops!</b> Parece que o jogo ainda esta empresado há <a id="detalharAmigo" class="alert-link" href="#">alguem.</a>
+        </div>
+    }
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.Plataforma)
-        </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Nome)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Plataforma)
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.Plataforma)
         </dd>
@@ -32,8 +36,31 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Apagar" class="btn btn-default" /> |
-            @Html.ActionLink("Voltar", "Index")
+            @if (Model.ListaEmprestimos.Any())
+            {
+                <input type="submit" value="Apagar" class="btn btn-default" disabled="disabled" />
+            }
+            else
+            {
+                <input type="submit" value="Apagar" class="btn btn-default" />
+            }
+             | @Html.ActionLink("Voltar", "Index")
         </div>
     }
 </div>
+<div id="containerModal"></div>
+@section scripts{
+    <script type="text/javascript">
+        var app = app || {};
+        app.Urls = app.Urls || {};
+        app.Urls.urlBase = '@Url.Content("~")';
+        app.Urls.urlDetalharAmigoJogo = '@Url.Action("DetalharAmigoJogo","Jogos")';
+
+        var modelJogo = {
+            JogoId: '@Model.JogoId'
+        };
+
+    </script>
+    <script type="text/javascript" src="@Scripts.Url("~/Scripts/gerenciadorJogos.js")"></script>
+    <script type="text/javascript" src="@Scripts.Url("~/Scripts/Jogo/jogo.js")"></script>
+}

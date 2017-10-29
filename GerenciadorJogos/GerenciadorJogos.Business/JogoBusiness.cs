@@ -12,43 +12,40 @@ namespace GerenciadorJogos.Business
     {
         public GerenciadorJogosContext _dbContext { get; set; }
 
+        public List<Jogo> ConsultarJogosAindaNaoEmprestados()
+        {
+            var jogosDisponiveis = _dbContext.Jogos
+                .Include(x => x.ListaEmprestimos)
+                .Where(x => !x.ListaEmprestimos.Any())
+                .ToList();
+            return jogosDisponiveis;
+        }
+
         public Jogo ConsultarPorId(int id)
         {
-            var jogo = new Jogo();
-            //using (_dbContext)
-            //{
-            //    jogo = _dbContext.Jogos.Include(x => x.Emprestimo).FirstOrDefault(x => x.JogoId == id);
-            //}
+            var jogo = _dbContext.Jogos.Include(x => x.ListaEmprestimos.Select(y => y.Amigo))
+                    .FirstOrDefault(x => x.JogoId == id);
+            jogo.ListaEmprestimos.ForEach(x => { x.Amigo.ListaEmprestimos = null; x.Jogo = null; });
             return jogo;
         }
 
         public void ExcluirPorId(int id)
         {
-            using (_dbContext)
-            {
-                var jogo = ConsultarPorId(id);
-                _dbContext.Jogos.Remove(jogo);
-                _dbContext.SaveChanges();
-            }
+            var jogo = ConsultarPorId(id);
+            _dbContext.Jogos.Remove(jogo);
+            _dbContext.SaveChanges();
         }
 
         public List<Jogo> Listar()
         {
-            var lista = new List<Jogo>();
-            using (_dbContext)
-            {
-                lista = _dbContext.Jogos.ToList();
-            }
+            var lista = _dbContext.Jogos.ToList();
             return lista;
         }
 
         public void Salvar(Jogo jogo)
         {
-            using (_dbContext)
-            {
-                _dbContext.Jogos.AddOrUpdate(jogo);
-                _dbContext.SaveChanges();
-            }
+            _dbContext.Jogos.AddOrUpdate(jogo);
+            _dbContext.SaveChanges();
         }
     }
 }

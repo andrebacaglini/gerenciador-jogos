@@ -15,7 +15,7 @@ namespace GerenciadorJogos.Domain.Entities
         public string Sobrenome { get; set;}
         public string Apelido { get; set; }
         
-        public virtual ICollection<Emprestimo> ListaEmprestimos { get; set; }
+        public virtual List<Emprestimo> ListaEmprestimos { get; set; }
 
     }
 }

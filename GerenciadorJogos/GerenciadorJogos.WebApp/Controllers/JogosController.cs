@@ -3,6 +3,7 @@ using GerenciadorJogos.Business.Interfaces;
 using GerenciadorJogos.Domain.Entities;
 using GerenciadorJogos.WebApp.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -98,7 +99,7 @@ namespace GerenciadorJogos.WebApp.Controllers
             {
                 var jogo = Mapper.Map<Jogo>(jogoVm);
                 JogoBusiness.Salvar(jogo);
-                
+
                 return RedirectToAction("Index");
             }
             return View(jogoVm);
@@ -124,9 +125,21 @@ namespace GerenciadorJogos.WebApp.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             JogoBusiness.ExcluirPorId(id);
             return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region AJAX
+        [HttpGet]
+        public PartialViewResult DetalharAmigoJogo(int id)
+        {
+            var jogo = JogoBusiness.ConsultarPorId(id);
+            var emprestimo = jogo.ListaEmprestimos.FirstOrDefault();
+            var emprestimoVm = Mapper.Map<Emprestimo, EmprestimoViewModel>(emprestimo);
+            return PartialView("~/Views/Jogos/Partial/_modalDetalheAmigo.cshtml", emprestimoVm);
         }
 
         #endregion

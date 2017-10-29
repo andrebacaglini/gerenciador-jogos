@@ -14,6 +14,7 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Plataforma</th>
                             <th scope="col">Data de empréstimo</th>
+                            <th scope="col">Data de devolução</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,6 +24,14 @@
                                 <td>@emprestimo.Jogo.Nome</td>
                                 <td>@emprestimo.Jogo.Plataforma</td>
                                 <td>@emprestimo.DataEmprestimo.ToShortDateString()</td>
+                                @if (emprestimo.DataDevolucao.HasValue)
+                                {
+                                    <td>@emprestimo.DataDevolucao.Value</td>
+                                }
+                                else
+                                {
+                                    <td>Sabe Deus quando...</td>
+                                }
                             </tr>
                         }
                     </tbody>

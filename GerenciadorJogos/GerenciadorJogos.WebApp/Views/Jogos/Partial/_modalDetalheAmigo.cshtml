@@ -1,0 +1,27 @@
+﻿@model GerenciadorJogos.WebApp.Models.EmprestimoViewModel
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetalheAmigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Seu amigo @Model.Amigo.Nome está com seu jogo emprestado.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @if (Model.DataDevolucao.HasValue)
+                    {
+                        <h5>Ele pegou seu jogo empresado no dia @Model.DataEmprestimo.ToShortDateString() e vai te devolver no dia @Model.DataDevolucao.Value.ToShortDateString()</h5>
+                    }
+                    else
+                    {
+                        <h5>Ele pegou seu jogo empresado no dia @Model.DataEmprestimo.ToShortDateString() e não tem previsão para devolver.</h5>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

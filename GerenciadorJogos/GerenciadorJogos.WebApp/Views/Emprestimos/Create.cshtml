@@ -1,11 +1,11 @@
-﻿@model GerenciadorJogos.Domain.Entities.Emprestimo
+﻿@model GerenciadorJogos.WebApp.Models.EmprestimoViewModel
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Cadastro de Empréstimos</h2>
 
 
 @using (Html.BeginForm())
@@ -13,32 +13,37 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Emprestimo</h4>
+        <h4>Utilize este formulário para cadastrar novos empréstimos.</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.AmigoId, "AmigoId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AmigoId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("AmigoId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AmigoId, "", new { @class = "text-danger" })
+                @*Talvez colocar o hidden pra salvar direto no obj*@
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JogoId, "JogoId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.JogoId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @Html.ListBoxFor()
                 @Html.DropDownList("JogoId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.JogoId, "", new { @class = "text-danger" })
+                @*Talvez colocar o hidden pra salvar direto no obj*@
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DataEmprestimo, "DataEmprestimo", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DataEmprestimo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataEmprestimo, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DataEmprestimo, "", new { @class = "text-danger" })
-            </div>
-            @Html.LabelFor(model => model.DataDevolucao, "DataDevolucao", htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>           
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataDevolucao, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DataDevolucao, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DataDevolucao, "", new { @class = "text-danger" })
@@ -47,14 +52,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Cadastrar" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar", "Index")
 </div>
 
 @section Scripts {
