@@ -26,33 +26,38 @@
         </th>
         <th></th>
     </tr>
-
-    @foreach (var item in Model)
+    @if (Model.Any())
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amigo.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Jogo.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEmprestimo)
-            </td>
-            @if (item.DataDevolucao.HasValue)
-            {
-                <td>@item.DataDevolucao.Value</td>
-            }
-            else
-            {
-                <td>Sabe Deus quando...</td>
-            }
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { idAmigo = item.AmigoId, idJogo = item.JogoId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.EmprestimoId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.EmprestimoId })
-            </td>
-        </tr>
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amigo.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jogo.Nome)
+                </td>
+                <td>
+                    @item.DataEmprestimo.ToShortDateString()
+                </td>
+                @if (item.DataDevolucao.HasValue)
+                {
+                    <td>@item.DataDevolucao.Value.ToShortDateString()</td>
+                }
+                else
+                {
+                    <td>Sabe-se lá quando...</td>
+                }
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { idAmigo = item.AmigoId, idJogo = item.JogoId }) |
+                    @Html.ActionLink("Detalhe", "Details", new { idAmigo = item.AmigoId, idJogo = item.JogoId }) |
+                    @Html.ActionLink("Excluir", "Delete", new { idAmigo = item.AmigoId, idJogo = item.JogoId })
+                </td>
+            </tr>
+        }
     }
-
+    else
+    {
+        <tr><td colspan="5" class="text-center">Nenhum empréstimo cadastrado.</td></tr>
+    }
 </table>

@@ -2,7 +2,9 @@
 using GerenciadorJogos.Business.Interfaces;
 using GerenciadorJogos.Domain.Entities;
 using GerenciadorJogos.WebApp.Models;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -31,16 +33,14 @@ namespace GerenciadorJogos.WebApp.Controllers
         }
 
         // GET: Emprestimoes/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? idAmigo, int? idJogo)
         {
-            if (id == null)
+            if (idAmigo == null || idJogo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //var emprestimo = EmprestimoBusiness.ConsultarPorId(id.Value);
-            var emprestimo = new Emprestimo();
-
+            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value);
             if (emprestimo == null)
             {
                 return HttpNotFound();
@@ -76,23 +76,25 @@ namespace GerenciadorJogos.WebApp.Controllers
 
             CriaViewBagDropdownAmigos(emprestimoVm.AmigoId);
             CriaViewBagDropdownJogosDisponiveisEdicao(emprestimo.Jogo);
+
             return View(emprestimoVm);
         }
 
         // GET: Emprestimoes/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? idAmigo, int? idJogo)
         {
-            if (id == null)
+            if (idAmigo == null || idJogo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Emprestimo emprestimo = db.Emprestimos.Find(id);
-            EmprestimoViewModel emprestimo = new EmprestimoViewModel();
+
+            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value);
             if (emprestimo == null)
             {
                 return HttpNotFound();
             }
-            return View(emprestimo);
+            var emprestimoVm = Mapper.Map<EmprestimoViewModel>(emprestimo);
+            return View(emprestimoVm);
         }
 
         #endregion
@@ -106,7 +108,7 @@ namespace GerenciadorJogos.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AmigoId,JogoId,DataEmprestimo,DataDevolucao")] EmprestimoViewModel emprestimoVm)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && DataDevolucaoValidas(emprestimoVm))
             {
                 var emprestimo = Mapper.Map<Emprestimo>(emprestimoVm);
                 EmprestimoBusiness.Salvar(emprestimo);
@@ -125,7 +127,7 @@ namespace GerenciadorJogos.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EmprestimoViewModel emprestimoVm)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && DataDevolucaoValidas(emprestimoVm))
             {
                 EmprestimoBusiness.ExcluirPorId(emprestimoVm.AmigoId, emprestimoVm.JogoIdAntigo);
                 EmprestimoBusiness.Salvar(Mapper.Map<Emprestimo>(emprestimoVm));
@@ -136,16 +138,14 @@ namespace GerenciadorJogos.WebApp.Controllers
             var jogo = JogoBusiness.ConsultarPorId(emprestimoVm.JogoIdAntigo);
             CriaViewBagDropdownJogosDisponiveisEdicao(jogo);
             return View(emprestimoVm);
-        }
+        }       
 
         // POST: Emprestimoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int idAmigo, int idJogo)
         {
-            //Emprestimo emprestimo = db.Emprestimos.Find(id);
-            //db.Emprestimos.Remove(emprestimo);
-            //db.SaveChanges();
+            EmprestimoBusiness.ExcluirPorId(idAmigo, idJogo);
             return RedirectToAction("Index");
         }
 
@@ -180,6 +180,16 @@ namespace GerenciadorJogos.WebApp.Controllers
             jogosDisponiveis.Add(jogoAnterior);
             var jogosDisponiveisVm = Mapper.Map<List<JogoViewModel>>(jogosDisponiveis);
             ViewBag.DropDownJogos = new SelectList(jogosDisponiveisVm, "JogoId", "Nome", jogoAnterior.JogoId);
+        }
+
+        private bool DataDevolucaoValidas(EmprestimoViewModel emprestimoVm)
+        {
+            if (emprestimoVm.DataDevolucao.HasValue && emprestimoVm.DataDevolucao < emprestimoVm.DataEmprestimo)
+            {
+                ModelState.AddModelError("", "Data de devolução não pode ser menor que a data de empréstimo.");
+                return false;
+            }
+            return true;
         }
 
         #endregion

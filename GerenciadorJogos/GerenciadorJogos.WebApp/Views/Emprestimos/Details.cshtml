@@ -1,11 +1,11 @@
-﻿@model GerenciadorJogos.Domain.Entities.Emprestimo
+﻿@model GerenciadorJogos.WebApp.Models.EmprestimoViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalhes do empréstimo</h2>
 
 <div>
     <h4>Emprestimo</h4>
@@ -31,18 +31,30 @@
             @Html.DisplayNameFor(model => model.DataEmprestimo)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DataEmprestimo)
+            @Model.DataEmprestimo.ToShortDateString()
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.DataDevolucao)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataDevolucao)
-        </dd>
+
+        @if (Model.DataDevolucao.HasValue)
+        {
+            <dd>
+                @Model.DataDevolucao.Value.ToShortDateString()
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Sabe-se lá quando...
+            </dd>
+        }
+
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmprestimoId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { idAmigo = Model.Amigo.AmigoId, idJogo = Model.Jogo.JogoId }) |
+    @Html.ActionLink("Voltar", "Index")
 </p>

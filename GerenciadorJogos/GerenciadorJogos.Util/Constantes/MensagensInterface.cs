@@ -10,5 +10,6 @@ namespace GerenciadorJogos.Util.Constantes
     {
         public const string TAMANHO_INVALIDO = "Tamanho inválido.";
         public const string CAMPO_OBRIGATORIO = "Campo obrigatório.";
+        public const string DATA_INVALIDA = "Data inválida.";
     }
 }

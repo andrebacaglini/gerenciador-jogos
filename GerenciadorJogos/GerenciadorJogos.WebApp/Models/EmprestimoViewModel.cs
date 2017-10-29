@@ -26,9 +26,13 @@ namespace GerenciadorJogos.WebApp.Models
 
         [Display(Name = "Data do empréstimo")]
         [Required(ErrorMessage = MensagensInterface.CAMPO_OBRIGATORIO)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = MensagensInterface.DATA_INVALIDA)]
         public DateTime DataEmprestimo { get; set; }
 
         [Display(Name = "Data da devolução")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date, ErrorMessage = MensagensInterface.DATA_INVALIDA)]
         public DateTime? DataDevolucao { get; set; }
     }
 }

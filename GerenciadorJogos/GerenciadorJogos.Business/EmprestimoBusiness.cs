@@ -26,7 +26,9 @@ namespace GerenciadorJogos.Business
         {
             var emprestimo = _dbContext.Emprestimos
                 .Include(x => x.Jogo)
+                .Include(x => x.Amigo)
                 .FirstOrDefault(x => x.AmigoId == idAmigo && x.JogoId == idJogo);
+            emprestimo.Amigo.ListaEmprestimos = null;
             emprestimo.Jogo.ListaEmprestimos = null;
             return emprestimo;
         }
@@ -34,7 +36,7 @@ namespace GerenciadorJogos.Business
         public List<Jogo> ConsultarJogosDisponiveis()
         {
             return _jogoBusiness.ConsultarJogosAindaNaoEmprestados();
-        }        
+        }
 
         public void ExcluirPorId(int idAmigo, int idJogo)
         {
