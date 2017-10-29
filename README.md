@@ -16,3 +16,26 @@ Repositório cuja finalidade é armazenar o código fonte do projeto que gerenci
     <li>jQuery</li>
     <li>SQLServer</li>
   </ul>
+  
+<b>Solução:</b>
+<p>Para o banco de dados foi criado em um container Docker baseado na imagem <a href="https://hub.docker.com/r/microsoft/mssql-server-linux/">"microsoft/mssql-server-linux"</a> em sua ultima versão, sem alterções nas configurações basicas da imagem. Portanto, o container fica exposto em localhost:1433 com usuário "sa" e senha definida na criação do container.</p>
+
+<p>Para a aplicação, foi criado um projeto MVC 5 com Razor utilizando o template incial sem autenticação. Foi feito o uso do Scaffolding para auxiliar na criação das Views e Controllers.
+  Também foram utilizados os frameworks adicionais:
+  <ul>
+    <li><a href="https://autofac.org/">Autofac</a> - Para injeção de dependencia</li>
+    <li><a href="http://automapper.org/">Automapper</a> - Para conversões de ViewModels para Entidades e vice-versa</li>
+  </ul>  
+  </p>
+
+<p>Como a aplicação foi desenvolvida utilizando Code First com Entity Framework e Data Migrations, os scripts aqui registrados são resultado da extração realizada da versão estável.
+Os scripts são:</p>
+  <ul>
+    <li><b>SCRIPT_DROP_CREATE_DATABASE.sql</b> - Cria a base de dados db_gerenciador_jogos.</<li>
+    <li><b>SCRIPT_DROP_CREATE_TABLES.sql</b> - Cria as tabelas do sistema.</li>  
+    <li><b>SCRIPT_INSERT_USER.sql</b> - Cria o usuário do sistema. (com senha a 'P4ssw0rd' sem as aspas)</li>  
+  </ul>
+
+Atenção! Ao executar os comandos Add-Migration e Update-Database os exemplos existentes no metodo Seed da classe Configuration serão persistidos.
+  
+
