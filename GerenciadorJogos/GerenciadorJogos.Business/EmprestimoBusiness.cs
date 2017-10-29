@@ -22,26 +22,23 @@ namespace GerenciadorJogos.Business
             return _amigoBusiness.ListarAmigos();
         }
 
-        public List<Jogo> ConsultarJogosDisponiveis()
-        {
-            return _jogoBusiness.ConsultarJogosAindaNaoEmprestados();
-        }
-
-        public Emprestimo ConsultarPorId(int id)
+        public Emprestimo ConsultarEmprestimoEspecifico(int idAmigo, int idJogo)
         {
             var emprestimo = _dbContext.Emprestimos
-                .Include(x => x.Amigo)
                 .Include(x => x.Jogo)
-                .FirstOrDefault();
-
-            emprestimo.Amigo.ListaEmprestimos.ForEach(x => { x.Amigo = null; x.Jogo.ListaEmprestimos = null; });
-            emprestimo.Jogo.ListaEmprestimos.ForEach(x => { x.Jogo = null; x.Amigo.ListaEmprestimos = null; });
+                .FirstOrDefault(x => x.AmigoId == idAmigo && x.JogoId == idJogo);
+            emprestimo.Jogo.ListaEmprestimos = null;
             return emprestimo;
         }
 
-        public void ExcluirPorId(int id)
+        public List<Jogo> ConsultarJogosDisponiveis()
         {
-            var emprestimo = ConsultarPorId(id);
+            return _jogoBusiness.ConsultarJogosAindaNaoEmprestados();
+        }        
+
+        public void ExcluirPorId(int idAmigo, int idJogo)
+        {
+            var emprestimo = ConsultarEmprestimoEspecifico(idAmigo, idJogo);
             _dbContext.Emprestimos.Remove(emprestimo);
             _dbContext.SaveChanges();
         }
@@ -52,7 +49,7 @@ namespace GerenciadorJogos.Business
                 .Include(x => x.Amigo)
                 .Include(x => x.Jogo)
                 .ToList();
-            lista.ForEach(x => { x.Amigo.ListaEmprestimos = null; x.Jogo.ListaEmprestimos = null; });            
+            lista.ForEach(x => { x.Amigo.ListaEmprestimos = null; x.Jogo.ListaEmprestimos = null; });
             return lista;
         }
 

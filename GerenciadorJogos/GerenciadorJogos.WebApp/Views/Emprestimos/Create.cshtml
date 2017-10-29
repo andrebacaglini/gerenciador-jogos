@@ -19,19 +19,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AmigoId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("AmigoId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.AmigoId, (IEnumerable<SelectListItem>)ViewBag.DropDownAmigos, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AmigoId, "", new { @class = "text-danger" })
-                @*Talvez colocar o hidden pra salvar direto no obj*@
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.JogoId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor()
-                @Html.DropDownList("JogoId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.JogoId, (IEnumerable<SelectListItem>)ViewBag.DropDownJogos, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.JogoId, "", new { @class = "text-danger" })
-                @*Talvez colocar o hidden pra salvar direto no obj*@
             </div>
         </div>
 

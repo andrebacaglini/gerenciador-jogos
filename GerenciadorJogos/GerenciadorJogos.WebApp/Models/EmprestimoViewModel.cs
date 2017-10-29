@@ -19,6 +19,8 @@ namespace GerenciadorJogos.WebApp.Models
         [Required(ErrorMessage = MensagensInterface.CAMPO_OBRIGATORIO)]
         public int JogoId { get; set; }
 
+        public int JogoIdAntigo { get; set; }
+
         public AmigoViewModel Amigo { get; set; }
         public JogoViewModel Jogo { get; set; }
 

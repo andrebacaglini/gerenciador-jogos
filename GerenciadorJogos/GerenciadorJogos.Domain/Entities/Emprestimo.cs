@@ -4,8 +4,6 @@ namespace GerenciadorJogos.Domain.Entities
 {
     public class Emprestimo
     {
-        public int EmprestimoId { get; set; }
-
         public int AmigoId { get; set; }
         public Amigo Amigo { get; set; }
 

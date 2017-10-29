@@ -48,7 +48,7 @@
                 <td>Sabe Deus quando...</td>
             }
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.EmprestimoId }) |
+                @Html.ActionLink("Edit", "Edit", new { idAmigo = item.AmigoId, idJogo = item.JogoId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.EmprestimoId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.EmprestimoId })
             </td>

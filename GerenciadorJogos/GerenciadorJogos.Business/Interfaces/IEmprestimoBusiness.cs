@@ -9,11 +9,11 @@ namespace GerenciadorJogos.Business.Interfaces
 {
     public interface IEmprestimoBusiness
     {
-        Emprestimo ConsultarPorId(int id);
-        void ExcluirPorId(int id);
+        void ExcluirPorId(int idAmigo, int idJogo);
         List<Emprestimo> Listar();
         void Salvar(Emprestimo emprestimo);
         List<Amigo> ConsultarAmigos();
         List<Jogo> ConsultarJogosDisponiveis();
+        Emprestimo ConsultarEmprestimoEspecifico(int idAmigo, int idJogo);
     }
 }

@@ -7,7 +7,9 @@ namespace GerenciadorJogos.DataAccess.Map
     {
         public EmprestimoMap()
         {
-            ToTable("tb_emprestimo");            
+            ToTable("tb_emprestimo");
+
+            HasKey(x => new { x.AmigoId, x.JogoId });
 
             HasRequired(x => x.Jogo)
                 .WithMany(x => x.ListaEmprestimos)

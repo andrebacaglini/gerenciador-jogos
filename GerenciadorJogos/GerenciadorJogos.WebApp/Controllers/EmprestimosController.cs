@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using GerenciadorJogos.Business.Interfaces;
+using GerenciadorJogos.Domain.Entities;
 using GerenciadorJogos.WebApp.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -14,6 +16,7 @@ namespace GerenciadorJogos.WebApp.Controllers
 
         public IMapper Mapper { get; set; }
         public IEmprestimoBusiness EmprestimoBusiness { get; set; }
+        public IJogoBusiness JogoBusiness { get; set; }
 
         #endregion
 
@@ -35,7 +38,8 @@ namespace GerenciadorJogos.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var emprestimo = EmprestimoBusiness.ConsultarPorId(id.Value);
+            //var emprestimo = EmprestimoBusiness.ConsultarPorId(id.Value);
+            var emprestimo = new Emprestimo();
 
             if (emprestimo == null)
             {
@@ -49,34 +53,30 @@ namespace GerenciadorJogos.WebApp.Controllers
         // GET: Emprestimoes/Create
         public ActionResult Create()
         {
-            var amigos = EmprestimoBusiness.ConsultarAmigos();
-            var amigosVm = Mapper.Map<List<AmigoViewModel>>(amigos);
-
-            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis();
-            var jogosDisponiveisVm = Mapper.Map<List<JogoViewModel>>(jogosDisponiveis);
-
-            
-            ViewBag.AmigoId = new SelectList(amigosVm, "AmigoId", "Nome");
-            ViewBag.JogoId = new SelectList(jogosDisponiveisVm, "JogoId", "Nome");
+            CriaViewBagDropdownAmigos();
+            CriaViewBagDropdownJogosDisponiveis();
             return View();
         }
 
         // GET: Emprestimoes/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? idAmigo, int? idJogo)
         {
-            if (id == null)
+            if (idAmigo == null || idJogo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Emprestimo emprestimo = db.Emprestimos.Find(id);
-            EmprestimoViewModel emprestimo = new EmprestimoViewModel();
+            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value);
             if (emprestimo == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.AmigoId = new SelectList(db.Amigos, "AmigoId", "Nome", emprestimo.AmigoId);
-            //ViewBag.JogoId = new SelectList(db.Jogos, "JogoId", "Nome", emprestimo.JogoId);
-            return View(emprestimo);
+
+            var emprestimoVm = Mapper.Map<EmprestimoViewModel>(emprestimo);
+            emprestimoVm.JogoIdAntigo = emprestimo.JogoId;
+
+            CriaViewBagDropdownAmigos(emprestimoVm.AmigoId);
+            CriaViewBagDropdownJogosDisponiveisEdicao(emprestimo.Jogo);
+            return View(emprestimoVm);
         }
 
         // GET: Emprestimoes/Delete/5
@@ -104,18 +104,18 @@ namespace GerenciadorJogos.WebApp.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmprestimoId,AmigoId,JogoId,DataEmprestimo,DataDevolucao")] EmprestimoViewModel emprestimo)
+        public ActionResult Create([Bind(Include = "AmigoId,JogoId,DataEmprestimo,DataDevolucao")] EmprestimoViewModel emprestimoVm)
         {
             if (ModelState.IsValid)
             {
-                //db.Emprestimos.Add(emprestimo);
-                //db.SaveChanges();
+                var emprestimo = Mapper.Map<Emprestimo>(emprestimoVm);
+                EmprestimoBusiness.Salvar(emprestimo);
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.AmigoId = new SelectList(db.Amigos, "AmigoId", "Nome", emprestimo.AmigoId);
-            //ViewBag.JogoId = new SelectList(db.Jogos, "JogoId", "Nome", emprestimo.JogoId);
-            return View(emprestimo);
+            CriaViewBagDropdownAmigos();
+            CriaViewBagDropdownJogosDisponiveis();
+            return View(emprestimoVm);
         }
 
         // POST: Emprestimoes/Edit/5
@@ -123,17 +123,19 @@ namespace GerenciadorJogos.WebApp.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmprestimoId,AmigoId,JogoId,DataEmprestimo,DataDevolucao")] EmprestimoViewModel emprestimo)
+        public ActionResult Edit(EmprestimoViewModel emprestimoVm)
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(emprestimo).State = EntityState.Modified;
-                //db.SaveChanges();
+                EmprestimoBusiness.ExcluirPorId(emprestimoVm.AmigoId, emprestimoVm.JogoIdAntigo);
+                EmprestimoBusiness.Salvar(Mapper.Map<Emprestimo>(emprestimoVm));
                 return RedirectToAction("Index");
             }
-            //ViewBag.AmigoId = new SelectList(db.Amigos, "AmigoId", "Nome", emprestimo.AmigoId);
-            //ViewBag.JogoId = new SelectList(db.Jogos, "JogoId", "Nome", emprestimo.JogoId);
-            return View(emprestimo);
+
+            CriaViewBagDropdownAmigos(emprestimoVm.AmigoId);
+            var jogo = JogoBusiness.ConsultarPorId(emprestimoVm.JogoIdAntigo);
+            CriaViewBagDropdownJogosDisponiveisEdicao(jogo);
+            return View(emprestimoVm);
         }
 
         // POST: Emprestimoes/Delete/5
@@ -149,5 +151,37 @@ namespace GerenciadorJogos.WebApp.Controllers
 
         #endregion
 
+        #region Metodos Privados
+
+        private void CriaViewBagDropdownAmigos(params int[] idAmigoSelecionado)
+        {
+            var amigos = EmprestimoBusiness.ConsultarAmigos();
+            var amigosVm = Mapper.Map<List<AmigoViewModel>>(amigos);
+            if (idAmigoSelecionado.Any())
+            {
+                ViewBag.DropDownAmigos = new SelectList(amigosVm, "AmigoId", "Nome", idAmigoSelecionado[0]);
+            }
+            else
+            {
+                ViewBag.DropDownAmigos = new SelectList(amigosVm, "AmigoId", "Nome");
+            }
+        }
+
+        private void CriaViewBagDropdownJogosDisponiveis()
+        {
+            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis();
+            var jogosDisponiveisVm = Mapper.Map<List<JogoViewModel>>(jogosDisponiveis);
+            ViewBag.DropDownJogos = new SelectList(jogosDisponiveisVm, "JogoId", "Nome");
+        }
+
+        private void CriaViewBagDropdownJogosDisponiveisEdicao(Jogo jogoAnterior)
+        {
+            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis();
+            jogosDisponiveis.Add(jogoAnterior);
+            var jogosDisponiveisVm = Mapper.Map<List<JogoViewModel>>(jogosDisponiveis);
+            ViewBag.DropDownJogos = new SelectList(jogosDisponiveisVm, "JogoId", "Nome", jogoAnterior.JogoId);
+        }
+
+        #endregion
     }
 }
