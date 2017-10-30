@@ -20,11 +20,12 @@ Repositório cuja finalidade é armazenar o código fonte do projeto que gerenci
 <b>Solução:</b>
 <p>Para o banco de dados foi criado em um container Docker baseado na imagem <a href="https://hub.docker.com/r/microsoft/mssql-server-linux/">"microsoft/mssql-server-linux"</a> em sua ultima versão, sem alterções nas configurações basicas da imagem. Portanto, o container fica exposto em localhost:1433 com usuário "sa" e senha definida na criação do container.</p>
 
-<p>Para a aplicação, foi criado um projeto MVC 5 com Razor utilizando o template incial sem autenticação. Foi feito o uso do Scaffolding para auxiliar na criação das Views e Controllers.
+<p>Para a aplicação, foi criado um projeto MVC 5 com Razor utilizando o template incial sem autenticação. Foi feito o uso do Scaffolding para auxiliar na criação das Views e Controllers. <br />
   Também foram utilizados os frameworks adicionais:
   <ul>
     <li><a href="https://autofac.org/">Autofac</a> - Para injeção de dependencia</li>
     <li><a href="http://automapper.org/">Automapper</a> - Para conversões de ViewModels para Entidades e vice-versa</li>
+    <li><a href="">jQuery</a> - Apesar de já estar embutido no template do MVC, foi utilizado em cenários especificos, como modais e um tratamento para input's tipo date.
   </ul>  
   </p>
 
