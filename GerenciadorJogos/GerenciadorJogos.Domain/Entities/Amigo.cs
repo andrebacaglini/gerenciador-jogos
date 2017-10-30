@@ -14,7 +14,10 @@ namespace GerenciadorJogos.Domain.Entities
         public string Nome { get; set; }
         public string Sobrenome { get; set;}
         public string Apelido { get; set; }
-        
+
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
+
         public virtual List<Emprestimo> ListaEmprestimos { get; set; }
 
     }

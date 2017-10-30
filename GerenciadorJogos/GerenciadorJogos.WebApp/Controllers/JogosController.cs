@@ -10,12 +10,14 @@ using System.Web.Mvc;
 namespace GerenciadorJogos.WebApp.Controllers
 {
     [Authorize]
+    [ValidateInput(false)]
     public class JogosController : Controller
     {
         #region Propriedades (Autowired)
 
         public IMapper Mapper { get; set; }
         public IJogoBusiness JogoBusiness { get; set; }
+        public IUsuarioBusiness UsuarioBusiness { get; set; }
 
         #endregion
 
@@ -24,7 +26,7 @@ namespace GerenciadorJogos.WebApp.Controllers
         // GET: Jogos
         public ActionResult Index()
         {
-            var listaJogos = JogoBusiness.Listar();
+            var listaJogos = JogoBusiness.Listar(User.Identity.Name);
             var listaJogosVm = Mapper.Map<List<JogoViewModel>>(listaJogos);
             return View(listaJogosVm);
         }
@@ -98,6 +100,8 @@ namespace GerenciadorJogos.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var jogo = Mapper.Map<Jogo>(jogoVm);
+                var usuario = UsuarioBusiness.ConsultaUsuario(User.Identity.Name);
+                jogo.UsuarioId = usuario.UsuarioId;
                 JogoBusiness.Salvar(jogo);
 
                 return RedirectToAction("Index");
@@ -115,6 +119,8 @@ namespace GerenciadorJogos.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var jogo = Mapper.Map<Jogo>(jogoVm);
+                var usuario = UsuarioBusiness.ConsultaUsuario(User.Identity.Name);
+                jogo.UsuarioId = usuario.UsuarioId;
                 JogoBusiness.Salvar(jogo);
                 return RedirectToAction("Index");
             }

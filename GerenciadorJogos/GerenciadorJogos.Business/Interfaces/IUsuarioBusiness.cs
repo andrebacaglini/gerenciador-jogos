@@ -10,5 +10,8 @@ namespace GerenciadorJogos.Business.Interfaces
     public interface IUsuarioBusiness
     {
         bool ValidarUsuario(Usuario usuario);
+        void Salvar(Usuario usuario);
+        bool NomeUsuarioExistente(string nomeUsuario);
+        Usuario ConsultaUsuario(string nomeUsuario);
     }
 }

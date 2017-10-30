@@ -12,12 +12,14 @@ using System.Web.Mvc;
 namespace GerenciadorJogos.WebApp.Controllers
 {
     [Authorize]
+    [ValidateInput(false)]
     public class EmprestimosController : Controller
     {
         #region Propriedades (Autowired)
 
         public IMapper Mapper { get; set; }
         public IEmprestimoBusiness EmprestimoBusiness { get; set; }
+        public IUsuarioBusiness UsuarioBusiness { get; set; }
         public IJogoBusiness JogoBusiness { get; set; }
 
         #endregion
@@ -27,7 +29,7 @@ namespace GerenciadorJogos.WebApp.Controllers
         // GET: Emprestimoes
         public ActionResult Index()
         {
-            var emprestimos = EmprestimoBusiness.Listar();
+            var emprestimos = EmprestimoBusiness.Listar(User.Identity.Name);
             var emprestimosVm = Mapper.Map<List<EmprestimoViewModel>>(emprestimos);
             return View(emprestimosVm);
         }
@@ -40,7 +42,7 @@ namespace GerenciadorJogos.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value);
+            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value, User.Identity.Name);
             if (emprestimo == null)
             {
                 return HttpNotFound();
@@ -65,7 +67,7 @@ namespace GerenciadorJogos.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value);
+            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value, User.Identity.Name);
             if (emprestimo == null)
             {
                 return HttpNotFound();
@@ -88,7 +90,7 @@ namespace GerenciadorJogos.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value);
+            var emprestimo = EmprestimoBusiness.ConsultarEmprestimoEspecifico(idAmigo.Value, idJogo.Value, User.Identity.Name);
             if (emprestimo == null)
             {
                 return HttpNotFound();
@@ -110,7 +112,9 @@ namespace GerenciadorJogos.WebApp.Controllers
         {
             if (ModelState.IsValid && DataDevolucaoValidas(emprestimoVm))
             {
+                var usuario = UsuarioBusiness.ConsultaUsuario(User.Identity.Name);
                 var emprestimo = Mapper.Map<Emprestimo>(emprestimoVm);
+                emprestimo.UsuarioId = usuario.UsuarioId;
                 EmprestimoBusiness.Salvar(emprestimo);
                 return RedirectToAction("Index");
             }
@@ -129,8 +133,11 @@ namespace GerenciadorJogos.WebApp.Controllers
         {
             if (ModelState.IsValid && DataDevolucaoValidas(emprestimoVm))
             {
-                EmprestimoBusiness.ExcluirPorId(emprestimoVm.AmigoId, emprestimoVm.JogoIdAntigo);
-                EmprestimoBusiness.Salvar(Mapper.Map<Emprestimo>(emprestimoVm));
+                EmprestimoBusiness.ExcluirPorId(emprestimoVm.AmigoId, emprestimoVm.JogoIdAntigo, User.Identity.Name);
+                var usuario = UsuarioBusiness.ConsultaUsuario(User.Identity.Name);
+                var emprestimo = Mapper.Map<Emprestimo>(emprestimoVm);
+                emprestimo.UsuarioId = usuario.UsuarioId;
+                EmprestimoBusiness.Salvar(emprestimo);
                 return RedirectToAction("Index");
             }
 
@@ -138,14 +145,14 @@ namespace GerenciadorJogos.WebApp.Controllers
             var jogo = JogoBusiness.ConsultarPorId(emprestimoVm.JogoIdAntigo);
             CriaViewBagDropdownJogosDisponiveisEdicao(jogo);
             return View(emprestimoVm);
-        }       
+        }
 
         // POST: Emprestimoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int idAmigo, int idJogo)
         {
-            EmprestimoBusiness.ExcluirPorId(idAmigo, idJogo);
+            EmprestimoBusiness.ExcluirPorId(idAmigo, idJogo, User.Identity.Name);
             return RedirectToAction("Index");
         }
 
@@ -155,7 +162,7 @@ namespace GerenciadorJogos.WebApp.Controllers
 
         private void CriaViewBagDropdownAmigos(params int[] idAmigoSelecionado)
         {
-            var amigos = EmprestimoBusiness.ConsultarAmigos();
+            var amigos = EmprestimoBusiness.ConsultarAmigos(User.Identity.Name);
             var amigosVm = Mapper.Map<List<AmigoViewModel>>(amigos);
             if (idAmigoSelecionado.Any())
             {
@@ -169,14 +176,14 @@ namespace GerenciadorJogos.WebApp.Controllers
 
         private void CriaViewBagDropdownJogosDisponiveis()
         {
-            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis();
+            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis(User.Identity.Name);
             var jogosDisponiveisVm = Mapper.Map<List<JogoViewModel>>(jogosDisponiveis);
             ViewBag.DropDownJogos = new SelectList(jogosDisponiveisVm, "JogoId", "Nome");
         }
 
         private void CriaViewBagDropdownJogosDisponiveisEdicao(Jogo jogoAnterior)
         {
-            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis();
+            var jogosDisponiveis = EmprestimoBusiness.ConsultarJogosDisponiveis(User.Identity.Name);
             jogosDisponiveis.Add(jogoAnterior);
             var jogosDisponiveisVm = Mapper.Map<List<JogoViewModel>>(jogosDisponiveis);
             ViewBag.DropDownJogos = new SelectList(jogosDisponiveisVm, "JogoId", "Nome", jogoAnterior.JogoId);

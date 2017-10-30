@@ -12,6 +12,10 @@ namespace GerenciadorJogos.DataAccess.Map
 
             HasKey(x => x.AmigoId);
 
+            HasRequired(x => x.Usuario)
+                .WithMany(x => x.ListaAmigos)
+                .HasForeignKey(x => x.UsuarioId);
+
             Property(x => x.Nome).HasMaxLength(100).IsRequired();
             Property(x => x.Sobrenome).HasMaxLength(100).IsRequired();
             Property(x => x.Apelido).HasMaxLength(50).IsOptional();

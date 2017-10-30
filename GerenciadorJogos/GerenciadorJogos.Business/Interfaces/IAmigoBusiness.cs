@@ -9,7 +9,7 @@ namespace GerenciadorJogos.Business.Interfaces
 {
     public interface IAmigoBusiness
     {
-        List<Amigo> ListarAmigos();
+        List<Amigo> ListarAmigos(string nomeUsuario);
         Amigo ConsultarPorId(int? id);
         void Salvar(Amigo amigo);
         void ExcluirPorId(int id);

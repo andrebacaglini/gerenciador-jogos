@@ -30,9 +30,12 @@ namespace GerenciadorJogos.Business
             _dbContext.SaveChanges();
         }
 
-        public List<Amigo> ListarAmigos()
+        public List<Amigo> ListarAmigos(string nomeUsuario)
         {
-            var lista = _dbContext.Amigos.ToList();
+            var lista = _dbContext.Amigos
+                .Include(x => x.Usuario)
+                .Where(x => string.Equals(x.Usuario.NomeUsuario, nomeUsuario))
+                .ToList();
             return lista;
         }
 

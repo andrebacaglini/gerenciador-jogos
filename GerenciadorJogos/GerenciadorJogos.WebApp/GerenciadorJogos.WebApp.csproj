@@ -284,6 +284,7 @@
     <Content Include="Views\Conta\Login.cshtml" />
     <Content Include="Views\Amigos\Partial\_modalListaJogosAmigo.cshtml" />
     <Content Include="Views\Jogos\Partial\_modalDetalheAmigo.cshtml" />
+    <Content Include="Views\Conta\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

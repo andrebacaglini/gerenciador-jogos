@@ -12,11 +12,12 @@ namespace GerenciadorJogos.Business
     {
         public GerenciadorJogosContext _dbContext { get; set; }
 
-        public List<Jogo> ConsultarJogosAindaNaoEmprestados()
+        public List<Jogo> ConsultarJogosAindaNaoEmprestados(string nomeUsuario)
         {
             var jogosDisponiveis = _dbContext.Jogos
                 .Include(x => x.ListaEmprestimos)
-                .Where(x => !x.ListaEmprestimos.Any())
+                .Include(x => x.Usuario)
+                .Where(x => !x.ListaEmprestimos.Any() && string.Equals(x.Usuario.NomeUsuario, nomeUsuario))
                 .ToList();
             return jogosDisponiveis;
         }
@@ -36,9 +37,12 @@ namespace GerenciadorJogos.Business
             _dbContext.SaveChanges();
         }
 
-        public List<Jogo> Listar()
+        public List<Jogo> Listar(string nomeUsuario)
         {
-            var lista = _dbContext.Jogos.ToList();
+            var lista = _dbContext.Jogos
+                .Include(x => x.Usuario)
+                .Where(x => string.Equals(x.Usuario.NomeUsuario, nomeUsuario))
+                .ToList();
             return lista;
         }
 

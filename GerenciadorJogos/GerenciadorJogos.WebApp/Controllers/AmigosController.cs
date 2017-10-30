@@ -9,11 +9,13 @@ using System.Web.Mvc;
 namespace GerenciadorJogos.WebApp.Controllers
 {
     [Authorize]
+    [ValidateInput(false)]
     public class AmigosController : Controller
     {
         #region Propriedades (Autowired)
 
         public IAmigoBusiness AmigoBusiness { get; set; }
+        public IUsuarioBusiness UsuarioBusiness { get; set; }
         public IMapper Mapper { get; set; }
 
         #endregion
@@ -23,7 +25,7 @@ namespace GerenciadorJogos.WebApp.Controllers
         // GET: Amigos
         public ActionResult Index()
         {
-            var lista = AmigoBusiness.ListarAmigos();
+            var lista = AmigoBusiness.ListarAmigos(User.Identity.Name);
             var listaAmigoVm = Mapper.Map<List<Amigo>, List<AmigoViewModel>>(lista);
 
             return View(listaAmigoVm);
@@ -102,7 +104,9 @@ namespace GerenciadorJogos.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var usuario = UsuarioBusiness.ConsultaUsuario(User.Identity.Name);
                 var amigo = Mapper.Map<Amigo>(amigoVm);
+                amigo.UsuarioId = usuario.UsuarioId;
                 AmigoBusiness.Salvar(amigo);
                 return RedirectToAction("Index");
             }
@@ -120,6 +124,8 @@ namespace GerenciadorJogos.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var amigo = Mapper.Map<Amigo>(amigoVm);
+                var usuario = UsuarioBusiness.ConsultaUsuario(User.Identity.Name);
+                amigo.UsuarioId = usuario.UsuarioId;
                 AmigoBusiness.Salvar(amigo);
                 return RedirectToAction("Index");
             }

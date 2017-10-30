@@ -12,6 +12,10 @@ namespace GerenciadorJogos.DataAccess.Map
 
             HasKey(x => x.JogoId);
 
+            HasRequired(x => x.Usuario)
+                .WithMany(x => x.ListaJogos)
+                .HasForeignKey(x => x.UsuarioId);
+
             Property(x => x.Nome).HasMaxLength(100).IsRequired();
             Property(x => x.Plataforma).IsRequired();
         }
