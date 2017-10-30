@@ -33,8 +33,7 @@ Repositório cuja finalidade é armazenar o código fonte do projeto que gerenci
 Os scripts são:</p>
   <ul>
     <li><b>SCRIPT_DROP_CREATE_DATABASE.sql</b> - Cria a base de dados db_gerenciador_jogos.</<li>
-    <li><b>SCRIPT_DROP_CREATE_TABLES.sql</b> - Cria as tabelas do sistema.</li>  
-    <li><b>SCRIPT_INSERT_USER.sql</b> - Cria o usuário do sistema. (com senha a 'P4ssw0rd' sem as aspas)</li>  
+    <li><b>SCRIPT_DROP_CREATE_TABLES.sql</b> - Cria as tabelas do sistema.</li>
   </ul>
 
 Atenção! Ao executar os comandos Add-Migration e Update-Database os exemplos existentes no metodo Seed da classe Configuration serão persistidos.
